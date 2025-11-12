@@ -60,41 +60,42 @@
 - Jobs pentru queue / notificări / reconciliere
 
 # 2. Structura proiectului (React + Vite + Tailwind)
-
+```text
 vive-credit/
 ├── public/
-│ ├── index.html
-src/
-├── core/
-│ ├── components/
-│ ├── layouts/
-│ ├── services/
-│ └── utils/
-├── modules/
-│ ├── onboarding/
-│ ├── kyc/
-│ ├── applications/
-│ ├── scoring/
-│ ├── contract/
-│ ├── payments/
-│ ├── collections/
-│ ├── admin/
-│ └── reports/
-├── routes/
-│ └── AppRoutes.tsx
-├── store/
-├── hooks/
-├── types/
-├── styles/
-├── utils/
-├── App.tsx
-└── main.tsx
+│   └── index.html
+├── src/
+│   ├── core/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── services/
+│   │   └── utils/
+│   ├── modules/
+│   │   ├── onboarding/
+│   │   ├── kyc/
+│   │   ├── applications/
+│   │   ├── scoring/
+│   │   ├── contract/
+│   │   ├── payments/
+│   │   ├── collections/
+│   │   ├── admin/
+│   │   └── reports/
+│   ├── routes/
+│   │   └── AppRoutes.tsx
+│   ├── store/
+│   ├── hooks/
+│   ├── types/
+│   ├── styles/
+│   ├── utils/
+│   ├── App.tsx
+│   └── main.tsx
 ├── tailwind.config.js
 ├── postcss.config.js
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
 └── README.md
+```
 
 # 3. Pași pentru rulare locală
 

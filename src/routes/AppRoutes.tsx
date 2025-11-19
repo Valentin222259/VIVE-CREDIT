@@ -7,22 +7,32 @@ import LoanPage from "@/modules/dashboard/pages/LoanPage";
 import PaymentsPage from "@/modules/dashboard/pages/PaymentsPage";
 import DocumentsPage from "@/modules/dashboard/pages/DocumentsPage";
 import { RiskDashboard } from "@modules/operator-dashboard/risk";
+import { Routes, Route } from "react-router-dom";
 
-export default function AppRoutes() {
+const AppRoutes = () => {
   return (
     <Routes>
+      {/* Risk Dashboard */}
+      <Route path="/risk" element={<RiskDashboard />} />
+
+      {/* Root */}
       <Route path="/" element={<div />} />
 
+      {/* Onboarding */}
       <Route path="/onboarding" element={<OnboardingPage />} />
       <Route path="/onboarding/success" element={<SuccessPage />} />
 
+      {/* Dashboard */}
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/dashboard/loan" element={<LoanPage />} />
       <Route path="/dashboard/payments" element={<PaymentsPage />} />
       <Route path="/dashboard/documents" element={<DocumentsPage />} />
       <Route path="/risk" element={<RiskDashboard />} />
 
+      {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
-}
+};
+
+export default AppRoutes;

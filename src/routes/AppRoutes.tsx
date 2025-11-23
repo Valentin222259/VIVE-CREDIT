@@ -27,6 +27,7 @@ const AppRoutes = () => {
       <Route path="/dashboard/documents" element={<DocumentsPage />} />
       <Route path="/risk" element={<RiskDashboard />} />
       <Route path="/decision-engine" element={<DecisionPage />} />
+
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

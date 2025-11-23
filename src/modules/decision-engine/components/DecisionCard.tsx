@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const DecisionCard = ({ data }: Props) => {
-  // Alegem iconița în funcție de decizie
   const getIcon = () => {
     if (data.decision === "APPROVED")
       return <CheckCircle className="text-green-600 w-8 h-8" />;

@@ -14,9 +14,8 @@ export default function DecisionPage() {
     setLoading(true);
     setResult(null);
 
-    // SIMULARE API CALL (POST /scoring/run)
+    // SIMULARE
     setTimeout(() => {
-      // Alegem un rezultat random pentru demo
       const scenarios = [MOCK_APPROVED, MOCK_REJECTED, MOCK_MANUAL];
       const randomResult =
         scenarios[Math.floor(Math.random() * scenarios.length)];
@@ -32,10 +31,6 @@ export default function DecisionPage() {
         <h1 className="text-3xl font-bold text-blue-700 tracking-tight">
           Decision Engine
         </h1>
-        <p className="text-gray-500 max-w-md mx-auto">
-          Partea 3: Execută regulile de risc și calculează scorul final pentru
-          client.
-        </p>
       </div>
 
       {/* Zona de Control */}
@@ -45,9 +40,9 @@ export default function DecisionPage() {
             <Play size={32} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Pregătit pentru analiză</h3>
+            <h3 className="text-lg font-semibold">Ready for analysis</h3>
             <p className="text-sm text-gray-500 mt-1">
-              Apasă butonul pentru a trimite datele către{" "}
+              Press the button below to send the data{" "}
               <code>POST /scoring/run</code>
             </p>
           </div>
@@ -57,7 +52,7 @@ export default function DecisionPage() {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 text-lg"
           >
-            {loading ? "Se calculează..." : "Rulează Scoring"}
+            {loading ? "Calculating..." : "Score"}
           </Button>
         </Card>
       )}
@@ -73,7 +68,7 @@ export default function DecisionPage() {
             className="gap-2"
           >
             <RotateCcw size={16} />
-            Resetare / Analiză Nouă
+            Resetare / Analiza Noua
           </Button>
         </div>
       )}

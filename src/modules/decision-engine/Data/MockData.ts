@@ -33,6 +33,6 @@ export const MOCK_MANUAL: ScoringResult = {
   score: 680,
   currency: "RON",
   summary: "Necesita analiza umana. Documente de venit neclare.",
-  reasonCodes: ["W02 - Discrepanta venit declarat vs ANAF"],
+  reasonCodes: ["Discrepanta venit declarat vs ANAF"],
   createdAt: new Date().toISOString(),
 };

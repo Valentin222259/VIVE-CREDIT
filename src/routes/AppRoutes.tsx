@@ -1,21 +1,16 @@
-import { AuditDashboard } from "@/modules/admin-audit/AuditDashboard";
 import DashboardPage from "@/modules/dashboard/pages/DashboardPage";
+import { AuditDashboard } from "@/modules/admin-audit/AuditDashboard";
 import DocumentsPage from "@/modules/dashboard/pages/DocumentsPage";
 import LoanPage from "@/modules/dashboard/pages/LoanPage";
 import PaymentsPage from "@/modules/dashboard/pages/PaymentsPage";
-import { RiskDashboard } from "@modules/operator-dashboard/risk";
-import DecisionPage from "@/modules/decision-engine/Pages/DecisionPage";
 import OnboardingPage from "@/modules/onboarding/pages/OnboardingPage";
 import SuccessPage from "@/modules/onboarding/pages/SuccessPage";
-import DocumentsPage from "@/modules/dashboard/pages/DocumentsPage";
-import { RiskDashboard } from "@modules/operator-dashboard/risk";
 import { PolicyEnginePage } from "@/modules/scoring";
 import OperatorDashboardLayout from "@/modules/operator-dashboard/layout/OperatorDashboardLayout";
 import OperatorDashboardPage from "@/modules/operator-dashboard/pages/OperatorDasboardPage";
 import RiskPage from "@/modules/operator-dashboard/pages/RiskPage";
+import { Route, Routes, Navigate } from "react-router-dom";
 import LoanForm from "@/pages/loan/LoanForm";
-// import PolicyEnginePage from "@/modules/policy-engine/PolicyEnginePage";
-import { Route, Routes } from "react-router-dom";
 
 const AppRoutes = () => {
   return (
@@ -32,10 +27,7 @@ const AppRoutes = () => {
       <Route path="/dashboard/loan" element={<LoanPage />} />
       <Route path="/dashboard/payments" element={<PaymentsPage />} />
       <Route path="/dashboard/documents" element={<DocumentsPage />} />
-      <Route path="/risk" element={<RiskDashboard />} />
-      <Route path="/decision-engine" element={<DecisionPage />} />
-      <Route path="/loan-form" element={<LoanForm />} />
-
+      <Route path="/dashboard/loan-form" element={<LoanForm />} />
       
       {/* OPERATOR DASHBOARD SALES/RISK/COLLECTIONS */}
       <Route path="/operator" element={<OperatorDashboardLayout />}>
@@ -47,6 +39,7 @@ const AppRoutes = () => {
       
       {/* Policy Engine */}
       <Route path="/policy-engine" element={<PolicyEnginePage />} />
+      <Route path="/audit" element={<AuditDashboard />} />
       
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />

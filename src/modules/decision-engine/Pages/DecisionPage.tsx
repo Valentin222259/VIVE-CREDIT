@@ -40,10 +40,10 @@ export default function DecisionPage() {
             <Play size={32} />
           </div>
           <div>
-            <h3 className="text-lg font-semibold">Ready for analysis</h3>
+            <h3 className="text-lg font-semibold">Pregătit pentru analiză</h3>
             <p className="text-sm text-gray-500 mt-1">
-              Press the button below to send the data{" "}
-              <code>POST /scoring/run</code>
+              Apăsați butonul de mai jos pentru a trimite datele{" "}
+              <code>POST/scoring/run</code>
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function DecisionPage() {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 text-lg"
           >
-            {loading ? "Calculating..." : "Score"}
+            {loading ? "Se calculează..." : "Scor"}
           </Button>
         </Card>
       )}
@@ -68,7 +68,7 @@ export default function DecisionPage() {
             className="gap-2"
           >
             <RotateCcw size={16} />
-            Resetare / Analiza Noua
+            Resetare / Analiză Nouă
           </Button>
         </div>
       )}

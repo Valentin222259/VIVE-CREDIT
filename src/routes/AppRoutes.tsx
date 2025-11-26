@@ -11,6 +11,7 @@ import OperatorDashboardPage from "@/modules/operator-dashboard/pages/OperatorDa
 import RiskPage from "@/modules/operator-dashboard/pages/RiskPage";
 import { Route, Routes, Navigate } from "react-router-dom";
 import LoanForm from "@/pages/loan/LoanForm";
+import DecisionPage from "@/modules/decision-engine/Pages/DecisionPage";
 
 const AppRoutes = () => {
   return (
@@ -37,8 +38,9 @@ const AppRoutes = () => {
         {/* <Route path="collection" element={<CollectionPage />} /> */}
       </Route>
       
-      {/* Policy Engine */}
+      {/* Policy Engine / Decision Engine */}
       <Route path="/policy-engine" element={<PolicyEnginePage />} />
+      <Route path="/decision-engine" element={<DecisionPage />} />
       <Route path="/audit" element={<AuditDashboard />} />
       
       {/* Fallback */}

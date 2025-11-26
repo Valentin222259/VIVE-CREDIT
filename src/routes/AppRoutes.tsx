@@ -7,6 +7,9 @@ import { RiskDashboard } from "@modules/operator-dashboard/risk";
 import DecisionPage from "@/modules/decision-engine/Pages/DecisionPage";
 import OnboardingPage from "@/modules/onboarding/pages/OnboardingPage";
 import SuccessPage from "@/modules/onboarding/pages/SuccessPage";
+import DocumentsPage from "@/modules/dashboard/pages/DocumentsPage";
+import { RiskDashboard } from "@modules/operator-dashboard/risk";
+import { PolicyEnginePage } from "@/modules/scoring";
 import OperatorDashboardLayout from "@/modules/operator-dashboard/layout/OperatorDashboardLayout";
 import OperatorDashboardPage from "@/modules/operator-dashboard/pages/OperatorDasboardPage";
 import RiskPage from "@/modules/operator-dashboard/pages/RiskPage";
@@ -19,11 +22,11 @@ const AppRoutes = () => {
     <Routes>
       {/* Root */}
       <Route path="/" element={<div />} />
-
+      
       {/* Onboarding */}
       <Route path="/onboarding" element={<OnboardingPage />} />
       <Route path="/onboarding/success" element={<SuccessPage />} />
-
+      
       {/* Dashboard */}
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/dashboard/loan" element={<LoanPage />} />
@@ -33,6 +36,7 @@ const AppRoutes = () => {
       <Route path="/decision-engine" element={<DecisionPage />} />
       <Route path="/loan-form" element={<LoanForm />} />
 
+      
       {/* OPERATOR DASHBOARD SALES/RISK/COLLECTIONS */}
       <Route path="/operator" element={<OperatorDashboardLayout />}>
         <Route index element={<OperatorDashboardPage />} />
@@ -40,12 +44,12 @@ const AppRoutes = () => {
         {/* <Route path="sales" element={<SalesPage />} /> */}
         {/* <Route path="collection" element={<CollectionPage />} /> */}
       </Route>
-
+      
       {/* Policy Engine */}
-      {/* <Route path='/policy-engine' element={<PolicyEnginePage />} /> */}
-
-      {/* Audit Dashboard */}
-      <Route path="/audit" element={<AuditDashboard />} />
+      <Route path="/policy-engine" element={<PolicyEnginePage />} />
+      
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

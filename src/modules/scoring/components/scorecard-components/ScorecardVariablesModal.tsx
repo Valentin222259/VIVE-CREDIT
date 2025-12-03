@@ -23,7 +23,7 @@ export const ScorecardVariablesModal: React.FC<PropsModal> = ({
 }) => {
   const [name, setName] = useState('');
   const [typeModal, setTypeModal] = useState('');
-  const [booleanValue, setBooleanValue] = useState('');
+  const [booleanValue, setBooleanValue] = useState<'true' | 'false' | ''>('');
   const [weight, setWeight] = useState<number>(0);
   const [error, setError] = useState({ name: '', typeModal: '', weight: '' });
   const [active, setActive] = useState(false);
@@ -36,6 +36,7 @@ export const ScorecardVariablesModal: React.FC<PropsModal> = ({
       setWeight(initialVariable.weight);
       setActive(initialVariable.active);
       setRules(initialVariable.rules);
+      setBooleanValue(initialVariable?.booleanV ?? '');
     } else {
       setName('');
       setTypeModal('');
@@ -136,6 +137,10 @@ export const ScorecardVariablesModal: React.FC<PropsModal> = ({
       weight,
       active,
       rules,
+      booleanV:
+        typeModal === 'boolean' && booleanValue !== ''
+          ? booleanValue
+          : undefined,
     };
 
     onSave(newVariable);
@@ -315,7 +320,7 @@ export const ScorecardVariablesModal: React.FC<PropsModal> = ({
               </div>
               <button
                 onClick={() => removeRule(i)}
-                className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"
+                className="px-2 py-2 bg-blue-100 text-blue-500 rounded-md hover:bg-blue-200"
               >
                 Șterge
               </button>

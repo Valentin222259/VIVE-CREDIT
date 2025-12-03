@@ -9,6 +9,7 @@ export const ScorecardEngine: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [variables, setVariables] = useState<Variable[]>([]);
   const [editingVariable, setEditingVariable] = useState<Variable | null>(null);
+  const [openRow, setOpenRow] = useState<string | null>(null);
 
   const handleScoreValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -56,7 +57,31 @@ export const ScorecardEngine: React.FC = () => {
   const handleDeleteVariable = (id: string) => {
     setVariables(variables.filter((v) => v.id !== id));
   };
-  const totalWeight = variables.reduce((sum, v) => sum + v.weight, 0);
+
+  const displayVariableName = (name: string) => {
+    switch (name) {
+      case 'venit':
+        return 'Venit';
+      case 'varsta':
+        return 'Vârstă';
+      case 'sector':
+        return 'Sector';
+      case 'istorice':
+        return 'Istoric';
+      case 'kyc':
+        return 'KYC Flags';
+      default:
+        return name;
+    }
+  };
+
+  const handleShowModalRules = (rowId: string) => {
+    setOpenRow(openRow === rowId ? null : rowId);
+  };
+
+  const totalWeight = variables
+    .filter((v) => v.active)
+    .reduce((sum, v) => sum + v.weight, 0);
   const isWeightValid = totalWeight.toFixed(2) === '1.00';
 
   return (
@@ -96,7 +121,7 @@ export const ScorecardEngine: React.FC = () => {
         <div className="flex justify-between mt-10">
           <button
             onClick={() => setShowModal(true)}
-            className="bg-white border border-gray-300 shadow-md px-4 py-2   rounded-lg hover:bg-gray-50"
+            className="bg-white border border-gray-300 shadow-md px-4 py-2 rounded-lg hover:bg-gray-50"
           >
             Adaugă variabilă
           </button>
@@ -109,46 +134,240 @@ export const ScorecardEngine: React.FC = () => {
         </div>
         {variables.length !== 0 ? (
           <div>
-            <table className="w-full text-left border border-gray-200 rounded-lg overflow-hidden mt-6">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="p-3 border">Nume variabilă</th>
-                  <th className="p-3 border">Tip</th>
-                  <th className="p-3 border">Pondere</th>
-                  <th className="p-3 border">Nr. reguli</th>
-                  <th className="p-3 border text-center">Activă</th>
-                  <th className="p-3 border text-center">Acțiuni</th>
-                </tr>
-              </thead>
-              <tbody>
-                {variables.map((v) => (
-                  <tr key={v.id} className="hover:bg-gray-50 transition">
-                    <td className="p-3 border font-medium ">{v.name}</td>
-                    <td className="p-3 border "> {v.type}</td>
-                    <td className="p-3 border">{v.weight.toFixed(2)}</td>
-                    <td className="p-3 border">{v.rules.length}</td>
-                    <td className="p-3 border text-center">
-                      {v.active ? 'Da' : 'Nu'}
-                    </td>
-                    <td className="p-3 border text-center space-x-2">
-                      <button
-                        className="border border-gray-400 rounded-md py-1 px-3 hover:text-gray-600 text-sm"
-                        onClick={() => handleEditVariable(v)}
-                      >
-                        Editează
-                      </button>
-
-                      <button
-                        className="text-red-600 border border-gray-400 rounded-md py-1 px-3 hover:text-red-400 text-sm"
-                        onClick={() => handleDeleteVariable(v.id)}
-                      >
-                        Șterge
-                      </button>
-                    </td>
+            {/* Desktop */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full text-left border border-gray-200 rounded-lg overflow-hidden mt-6">
+                <thead className="bg-blue-100 ">
+                  <tr>
+                    <th className="p-3 border border-gray-300">
+                      Nume variabilă
+                    </th>
+                    <th className="p-3 border border-gray-300">Tip</th>
+                    <th className="p-3 border border-gray-300">Pondere</th>
+                    <th className="p-3 border border-gray-300">Nr. reguli</th>
+                    <th className="p-3 border border-gray-300 text-center">
+                      Activă
+                    </th>
+                    <th className="p-3 border border-gray-300 text-center">
+                      Acțiuni
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {variables.map((v) => (
+                    <tr
+                      key={v.id}
+                      className={`hover:bg-blue-50/50 transition capitalize ${
+                        !v.active ? 'bg-gray-100' : ''
+                      }`}
+                    >
+                      <td className="p-3 border font-medium  ">
+                        {displayVariableName(v.name)}
+                      </td>
+                      <td className="p-3 border ">
+                        {' '}
+                        {v.type === 'boolean' ? (
+                          <div className="flex flex-col ">
+                            <span>{v.type}</span>
+                            <span>
+                              ({v.booleanV === 'true' ? 'Adevărat' : 'Fals'})
+                            </span>
+                          </div>
+                        ) : (
+                          <span>{v.type}</span>
+                        )}
+                      </td>
+                      <td className="p-3 border text-center">
+                        {v.weight.toFixed(2)}
+                      </td>
+                      <td className="p-3 border text-center relative">
+                        {v.rules.length === 0 ? (
+                          v.rules.length
+                        ) : (
+                          <div className="flex flex-col">
+                            {v.rules.length}
+                            <button
+                              onClick={() => handleShowModalRules(v.id)}
+                              className="text-xs border border-gray-300 rounded-md text-blue-500 font-bold hover:bg-gray-100 hover:text-blue-400"
+                            >
+                              Reguli
+                            </button>
+                            {openRow === v.id && (
+                              <>
+                                <div
+                                  onClick={() => setOpenRow(null)}
+                                  className="fixed inset-0 z-0"
+                                ></div>
+
+                                <div
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="absolute bg-white shadow-xl rounded-md border border-2 border-blue-400 px-4 py-2 overflow-y-auto max-h-28 max-w-48 z-10 mb-50 top-[-60%] left-1/2 transform -translate-x-1/2"
+                                >
+                                  {v.rules.map((rule, i) => (
+                                    <div
+                                      key={i}
+                                      className="flex justify-between border border-blue-100 rounded-md px-2 py-1 bg-blue-50 mt-2 shadow-md"
+                                    >
+                                      <div className="flex flex-col  ">
+                                        <p className="text-xs text-left">
+                                          Condiție:
+                                        </p>
+                                        <p className="text-blue-500 text-xs text-left">
+                                          {rule.condition}
+                                        </p>
+                                      </div>
+                                      <div className="flex flex-col px-4 ">
+                                        <p className="text-xs text-left">
+                                          Scor:
+                                        </p>
+                                        <p className="text-blue-800 text-xs font-semibold text-left">
+                                          {rule.score}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                  <button
+                                    onClick={() => setOpenRow(null)}
+                                    className="mt-2 text-xs font-bold bg-blue-100 text-blue-500 hover:bg-blue-200/70 rounded px-2 py-1 w-full"
+                                  >
+                                    Închide
+                                  </button>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                      <td className="p-3 border text-center">
+                        {v.active ? 'Da' : 'Nu'}
+                      </td>
+                      <td className="p-3 border text-center space-x-2">
+                        <button
+                          className="border border-gray-400 rounded-md py-1 px-3 hover:text-gray-600 text-sm"
+                          onClick={() => handleEditVariable(v)}
+                        >
+                          Editează
+                        </button>
+
+                        <button
+                          className="text-red-600 border border-gray-400 rounded-md py-1 px-3 hover:text-red-400 text-sm"
+                          onClick={() => handleDeleteVariable(v.id)}
+                        >
+                          Șterge
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile  */}
+
+            <div className="block sm:hidden flex flex-col gap-4 mt-6">
+              {variables.map((v) => (
+                <div
+                  key={v.id}
+                  className={`border rounded-lg p-4 shadow-sm   flex flex-col gap-2 ${
+                    !v.active ? 'bg-gray-100' : 'bg-white'
+                  }`}
+                >
+                  <div className="capitalize">
+                    <span className="font-semibold">Nume variabilă: </span>
+                    {displayVariableName(v.name)}
+                  </div>
+                  <div className="capitalize">
+                    <span className="font-semibold">Tip: </span>
+                    {v.type === 'boolean'
+                      ? `${v.type} (${
+                          v.booleanV === 'true' ? 'Adevărat' : 'Fals'
+                        })`
+                      : v.type}
+                  </div>
+                  <div>
+                    <span className="font-semibold">Pondere: </span>
+                    {v.weight.toFixed(2)}
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="font-semibold">Nr. reguli: </span>
+                    <div className=" text-center relative">
+                      {v.rules.length === 0 ? (
+                        v.rules.length
+                      ) : (
+                        <div className="flex gap-2 ">
+                          {v.rules.length}
+                          <button
+                            onClick={() => handleShowModalRules(v.id)}
+                            className="text-xs px-2 py-1 border border-gray-300 rounded-md text-blue-500 font-bold hover:bg-gray-100 hover:text-blue-400"
+                          >
+                            Reguli
+                          </button>
+                          {openRow === v.id && (
+                            <>
+                              <div
+                                onClick={() => setOpenRow(null)}
+                                className="fixed inset-0 z-0"
+                              ></div>
+
+                              <div
+                                onClick={(e) => e.stopPropagation()}
+                                className="absolute bg-white shadow-xl rounded-md border border-2 border-blue-200 px-4 py-2 overflow-y-auto max-h-28 max-w-30 z-10  top-[-160%] left-[150%] transform -translate-x-1/2"
+                              >
+                                {v.rules.map((rule, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex justify-between border border-blue-100 rounded-md px-2 py-1 bg-blue-50 mt-2 shadow-md"
+                                  >
+                                    <div className="flex flex-col  ">
+                                      <p className="text-xs text-left">
+                                        Condiție:
+                                      </p>
+                                      <p className="text-blue-500 text-xs text-left">
+                                        {rule.condition}
+                                      </p>
+                                    </div>
+                                    <div className="flex flex-col px-4 ">
+                                      <p className="text-xs text-left">Scor:</p>
+                                      <p className="text-blue-800 text-xs font-semibold text-left">
+                                        {rule.score}
+                                      </p>
+                                    </div>
+                                  </div>
+                                ))}
+                                <button
+                                  onClick={() => setOpenRow(null)}
+                                  className="mt-2 text-xs bg-blue-500 text-white rounded px-2 py-1 w-full"
+                                >
+                                  Închide
+                                </button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <span className="font-semibold">Activă: </span>
+                    {v.active ? 'Da' : 'Nu'}
+                  </div>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      className="border border-gray-400 rounded-md py-1 px-3 hover:text-gray-600 text-sm"
+                      onClick={() => handleEditVariable(v)}
+                    >
+                      Editează
+                    </button>
+                    <button
+                      className="text-red-600 border border-gray-400 rounded-md py-1 px-3 hover:text-red-400 text-sm"
+                      onClick={() => handleDeleteVariable(v.id)}
+                    >
+                      Șterge
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           ''

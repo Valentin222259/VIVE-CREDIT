@@ -2,11 +2,13 @@ import { AlertTriangle, CheckCircle, Clock, XCircle } from "lucide-react";
 import { mockDB } from "../data/mockDB";
 import UiCard from "../components/ui/UiCard";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 interface PieItem {
   label: string;
   value: number;
   color: string;
+  [key: string]: string | number;
 }
 
 export default function OperatorDashboardPage() {
@@ -31,11 +33,33 @@ export default function OperatorDashboardPage() {
     verdict = "În monitorizare";
   }
 
+  const navigate = useNavigate();
+
   const kpiCards = [
-    { label: "Total aplicații", value: total, icon: <AlertTriangle /> },
-    { label: "Aprobate", value: approved, icon: <CheckCircle /> },
-    { label: "Respinse", value: rejected, icon: <XCircle /> },
-    { label: "În așteptare", value: pending, icon: <Clock /> },
+    {
+      label: "Total aplicații",
+      value: total,
+      icon: <AlertTriangle />,
+      onClick: () => navigate("/operator/applications?status=all"),
+    },
+    {
+      label: "Aprobate",
+      value: approved,
+      icon: <CheckCircle />,
+      onClick: () => navigate("/operator/applications?status=approved"),
+    },
+    {
+      label: "Respinse",
+      value: rejected,
+      icon: <XCircle />,
+      onClick: () => navigate("/operator/applications?status=rejected"),
+    },
+    {
+      label: "În așteptare",
+      value: pending,
+      icon: <Clock />,
+      onClick: () => navigate("/operator/applications?status=pending"),
+    },
   ];
 
   const pieData: PieItem[] = [
@@ -45,11 +69,39 @@ export default function OperatorDashboardPage() {
   ];
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 flex flex-col gap-10">
+    <div className="w-full max-w-7xl mx-auto p-6 flex flex-col gap-5">
       {/* HEADER */}
-      <h1 className="text-2xl font-semibold tracking-tight text-blue-500 dark:text-gray-300">
+      <h1 className="text-2xl font-semibold tracking-tight text-blue-500 dark:text-gray-300 mb-3">
         Dashboard Monitorizare
       </h1>
+
+      {/* Management Clienți Card */}
+      <div 
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:shadow-md transition cursor-pointer border border-gray-100 dark:border-gray-700 w-full max-w-[420px]"
+        onClick={() => navigate('/operator/clients')}
+      >
+        <div className="flex items-center gap-2.5">
+          <div className="bg-blue-100 dark:bg-blue-900/30 rounded-full p-2.5 flex-shrink-0">
+            <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <div className="min-w-0">
+            <h3 className="font-semibold text-gray-900 dark:text-white text-sm">Management Clienți</h3>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Gestionare informații clienți</p>
+          </div>
+        </div>
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate('/operator/clients');
+          }}
+          className="bg-blue-600 dark:bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition"
+        >
+          Accesează
+        </button>
+      </div>
 
       {/* SUMMARY */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-2xl border bg-white dark:bg-gray-800 shadow-sm">
@@ -83,7 +135,7 @@ export default function OperatorDashboardPage() {
       </div>
 
       {/* MAIN */}
-      <div className="flex flex-col lg:flex-row gap-10">
+      <div className="flex flex-col lg:flex-row gap-6 min-w-0">
         {/* KPI */}
         <div className="grid w-full grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-5">
           {kpiCards.map((card, i) => (
@@ -92,11 +144,11 @@ export default function OperatorDashboardPage() {
         </div>
 
         {/* PIE CARD */}
-        <div className="w-full lg:w-[45%] bg-white dark:bg-gray-800 rounded-2xl p-6 border shadow-sm">
+        <div className="w-full lg:w-[45%] bg-white dark:bg-gray-800 rounded-2xl p-6 border shadow-sm min-w-0">
           <div className="flex flex-col items-center gap-6">
             {/* CHART */}
-            <div className="relative w-full h-[260px] sm:h-[300px]">
-              <ResponsiveContainer>
+            <div className="relative w-full">
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
                     data={pieData}

@@ -56,8 +56,6 @@ const CreditApplication = () => {
       },
     };
 
-    console.log("📨 [TASK 2.3] Payload:", payload);
-
     setTimeout(() => {
       setIsSubmitting(false);
       alert(`Cerere trimisă cu succes! ID: ${payload.id}`);
@@ -144,7 +142,7 @@ const CreditApplication = () => {
           <Card className="bg-slate-50/50 dark:bg-slate-900/50 border-dashed border-slate-300 dark:border-slate-700">
             <CardContent className="pt-6">
               <h3 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
-                Profil Aplicant (Preluat din cont)
+                Profil Aplicant
               </h3>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-200 dark:shadow-none">

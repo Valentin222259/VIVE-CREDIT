@@ -18,7 +18,7 @@ export const LOAN_CONFIG = {
   maxAmount: 50000,
   minPeriod: 6,
   maxPeriod: 60,
-  interestRate: 14.5, // fix
+  interestRate: 14.5, 
   defaultAmount: 5000,
   defaultPeriod: 24
 };

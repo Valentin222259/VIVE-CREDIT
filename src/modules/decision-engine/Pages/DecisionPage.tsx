@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MOCK_APPROVED, MOCK_REJECTED, MOCK_MANUAL } from "../Data/MockData";
+import { MOCK_APPROVED, MOCK_REJECTED, MOCK_MANUAL } from "../mock/MockData";
 import { DecisionCard } from "../components/DecisionCard";
 import type { ScoringResult } from "../types/decision.types";
 import { Play, RotateCcw } from "lucide-react";

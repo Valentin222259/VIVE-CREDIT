@@ -52,7 +52,7 @@ import { AuditDashboard } from "@/modules/admin-audit/AuditDashboard";
 import DecisionPage from "@/modules/decision-engine/Pages/DecisionPage";
 import { PolicyEnginePage } from "@/modules/scoring";
 import { ScorecardEngine } from "@/modules/scoring/pages/ScorecardEngine";
-import CreditApplication from "@/modules/applications/pages/CreditApplication";
+import CreditApplication from "@/modules/decision-engine/components/DecisionResultCard";
 
 /* Protected route */
 import ProtectedRoute from "@/components/ProtectedRoute";

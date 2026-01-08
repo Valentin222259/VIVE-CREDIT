@@ -55,8 +55,13 @@ import { PolicyEnginePage } from "@/modules/scoring";
 import { ScorecardEngine } from "@/modules/scoring/pages/ScorecardEngine";
 
 /* Protected route */
+import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AdminHomePage from "@/modules/admin/pages/AdminHomePage";
+import UsersPage from "@/modules/admin/pages/UsersPage";
 import RequestLoanPage from "@/modules/applications/pages/RequestLoanPage";
+import AdminLoginPage from "@/modules/auth/pages/AdminLoginPage";
+import { ApplicationsContextProvider } from "@/modules/operator-dashboard/hooks/ApplicationsContext";
 
 const AppRoutes = () => {
   return (
@@ -85,6 +90,29 @@ const AppRoutes = () => {
 
       {/* OPERATOR AUTH */}
       <Route path="/login/operator" element={<OperatorLoginPage />} />
+
+      {/* ADMIN AUTH */}
+
+      <Route path="/login/admin" element={<AdminLoginPage />} />
+
+      {/* ADMIN */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedAdminRoute>
+            <AdminHomePage />
+          </ProtectedAdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/users"
+        element={
+          <ProtectedAdminRoute>
+            <UsersPage />
+          </ProtectedAdminRoute>
+        }
+      />
 
       {/* CLIENT ONBOARDING */}
       <Route
@@ -206,7 +234,9 @@ const AppRoutes = () => {
         path="/operator"
         element={
           <ProtectedRoute allowedRoles={["operator"]}>
-            <OperatorDashboardLayout />
+            <ApplicationsContextProvider>
+              <OperatorDashboardLayout />
+            </ApplicationsContextProvider>
           </ProtectedRoute>
         }
       >

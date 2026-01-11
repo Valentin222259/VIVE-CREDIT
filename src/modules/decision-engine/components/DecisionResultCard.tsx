@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Importăm hook-ul pentru a citi datele trimise
 import { ClientDecisionCard } from "./ClientDecisionCard";
-import { decisionScenarios } from "../mock/DecisionScenarios.mock";
 import { type ScoringResult } from "../types/decision.types";
 import { Loader2 } from "lucide-react";
 
 export const DecisionResultCard: React.FC = () => {
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [currentScenario, setCurrentScenario] = useState<ScoringResult | null>(
     null
@@ -12,12 +13,29 @@ export const DecisionResultCard: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * decisionScenarios.length);
-      setCurrentScenario(decisionScenarios[randomIndex]);
+      //Preluam datele de la /Calculator
+      const scoringResult = location.state?.scoringResult;
+
+      if (scoringResult) {
+        //Se mapeaza datele din /Calculator
+        setCurrentScenario({
+          applicationId: `VIVE-${Math.floor(Math.random() * 9000 + 1000)}`,
+          decision: scoringResult.eligibil ? "APPROVED" : "REJECTED",
+          score: scoringResult.score,
+          summary: scoringResult.explicatie,
+          createdAt: new Date().toISOString(),
+          currency: "RON",
+          maxAmount: scoringResult.sumaMaximaCredit,
+          reasonCodes: [],
+        });
+      } else {
+        console.warn("Nu au fost găsite date de scoring în state.");
+      }
+
       setLoading(false);
     }, 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.state]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[500px] p-6 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border border-dashed border-slate-200 dark:border-slate-800 transition-colors">
@@ -25,12 +43,12 @@ export const DecisionResultCard: React.FC = () => {
         <div className="flex flex-col items-center space-y-4">
           <Loader2 className="w-10 h-10 text-primary animate-spin" />
           <p className="text-lg font-medium text-foreground animate-pulse">
-            Se procesează datele financiare...
+            Se procesează verdictul final...
           </p>
         </div>
       ) : (
         currentScenario && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 w-full flex justify-center">
             <ClientDecisionCard data={currentScenario} />
           </div>
         )

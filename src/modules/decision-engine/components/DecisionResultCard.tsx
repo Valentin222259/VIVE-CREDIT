@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Importăm hook-ul pentru a citi datele trimise
+import { useLocation } from "react-router-dom";
 import { ClientDecisionCard } from "./ClientDecisionCard";
 import { type ScoringResult } from "../types/decision.types";
 import { Loader2 } from "lucide-react";
@@ -13,14 +13,24 @@ export const DecisionResultCard: React.FC = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      //Preluam datele de la /Calculator
+      // Preluam datele de la /Calculator
       const scoringResult = location.state?.scoringResult;
 
       if (scoringResult) {
-        //Se mapeaza datele din /Calculator
+        let finalStatus: "approved" | "rejected" | "pending";
+
+        // Logica de mapare a scorului
+        if (scoringResult.score >= 70) {
+          finalStatus = "approved";
+        } else if (scoringResult.score === 55) {
+          finalStatus = "pending";
+        } else {
+          finalStatus = "rejected";
+        }
+
         setCurrentScenario({
           applicationId: `VIVE-${Math.floor(Math.random() * 9000 + 1000)}`,
-          decision: scoringResult.eligibil ? "APPROVED" : "REJECTED",
+          decision: finalStatus,
           score: scoringResult.score,
           summary: scoringResult.explicatie,
           createdAt: new Date().toISOString(),
@@ -28,12 +38,11 @@ export const DecisionResultCard: React.FC = () => {
           maxAmount: scoringResult.sumaMaximaCredit,
           reasonCodes: [],
         });
-      } else {
-        console.warn("Nu au fost găsite date de scoring în state.");
       }
 
       setLoading(false);
     }, 1500);
+
     return () => clearTimeout(timer);
   }, [location.state]);
 

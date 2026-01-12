@@ -21,7 +21,7 @@ export default function ScoringStatusCard({ status, score }: Props) {
           },
         });
       }}
-      className="w-full cursor-pointer rounded-[2rem] bg-gradient-to-r from-[#22c55e] via-[#10b981] to-[#2563eb] p-8 text-white shadow-xl transition-all hover:scale-[1.02]"
+      className="w-full cursor-pointer rounded-[2rem] bg-gradient-to-r from-[#22c55e] via-[#10b981] to-[#2563eb] p-8 text-white shadow-xl transition-all hover:scale-[1.02] dark:ring-1 dark:ring-white/10 dark:shadow-green-900/20"
     >
       <div className="mb-6 flex items-center gap-2 text-xl font-bold tracking-tight">
         <span className="text-orange-500">⚡</span> Ultimul Calcul

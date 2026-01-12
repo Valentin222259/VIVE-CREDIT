@@ -14,7 +14,9 @@ export const DecisionResultCard: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       // Preluam datele de la /Calculator
-      const scoringResult = location.state?.scoringResult;
+      const scoringResult =
+        location.state?.scoringResult ||
+        JSON.parse(localStorage.getItem("scoring-final") || "null");
 
       if (scoringResult) {
         let finalStatus: "approved" | "rejected" | "pending";

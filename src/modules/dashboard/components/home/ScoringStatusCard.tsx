@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { TrendingUp } from "lucide-react";
 
 interface Props {
   status: "approved" | "rejected" | "pending";
@@ -10,50 +11,47 @@ export default function ScoringStatusCard({ status, score }: Props) {
 
   return (
     <div
-      onClick={() => {
-        navigate("/dashboard/decision-result", {
-          state: {
-            scoringResult: {
-              score: score,
-              status: status,
-              explicatie: "Scor calculat pentru test.",
-            },
-          },
-        });
-      }}
-      className="w-full cursor-pointer rounded-[2rem] bg-gradient-to-r from-[#22c55e] via-[#10b981] to-[#2563eb] p-8 text-white shadow-xl transition-all hover:scale-[1.02] dark:ring-1 dark:ring-white/10 dark:shadow-green-900/20"
+      className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm transition-all hover:shadow-md cursor-pointer group"
+      onClick={() => navigate("/dashboard/decision-result")}
     >
-      <div className="mb-6 flex items-center gap-2 text-xl font-bold tracking-tight">
-        <span className="text-orange-500">⚡</span> Ultimul Calcul
-      </div>
-
-      {/* Butonul care ne duce din card in calculator*/}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          navigate("/calculator");
-        }}
-        className="text-xs font-semibold bg-white/20 hover:bg-white/40 px-3 py-1.5 rounded-full border border-white/30 transition-all"
-      >
-        Calculator →
-      </button>
-
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-lg font-medium opacity-90">Scor:</span>
-        {/* FOLOSIM variabila score aici */}
-        <span className="text-2xl font-extrabold">{score}</span>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <span className="text-lg font-medium opacity-90">Status:</span>
-        <span className="flex items-center gap-1 text-2xl font-extrabold tracking-wide">
-          {/* FOLOSIM variabila status aici */}
-          {status === "approved"
-            ? "✓ Eligibil"
-            : status === "pending"
-            ? "În așteptare"
-            : "✕ Neeligibil"}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          {/* Iconița albastră, ca la celelalte carduri */}
+          <div className="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+            <TrendingUp className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h3 className="font-semibold text-slate-800 dark:text-white">
+            Ultimul Calcul
+          </h3>
+        </div>
+        <span className="text-xs text-blue-600 dark:text-blue-400 font-medium group-hover:underline">
+          Vezi detalii →
         </span>
+      </div>
+
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-slate-500 dark:text-slate-400">
+            Scor calculat:
+          </span>
+          <span className="text-lg font-bold text-slate-900 dark:text-white">
+            {score}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-sm text-slate-500 dark:text-slate-400">
+            Status evaluare:
+          </span>
+          <span
+            className={`text-sm font-bold px-2 py-1 rounded-md ${
+              status === "approved"
+                ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                : "bg-yellow-100 text-yellow-700"
+            }`}
+          >
+            {status === "approved" ? "✓ Eligibil" : "În așteptare"}
+          </span>
+        </div>
       </div>
     </div>
   );

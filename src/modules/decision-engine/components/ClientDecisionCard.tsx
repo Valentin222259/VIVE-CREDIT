@@ -8,12 +8,14 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { type ScoringResult } from "../types/decision.types";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   data: ScoringResult;
 }
 
 export const ClientDecisionCard = ({ data }: Props) => {
+  const navigate = useNavigate();
   const config = {
     approved: {
       icon: (
@@ -82,12 +84,19 @@ export const ClientDecisionCard = ({ data }: Props) => {
         </p>
       </CardContent>
 
-      <CardFooter>
-        <Button
-          className="w-full py-6 text-lg font-bold shadow-lg"
-          variant={btnVariant}
-        >
+      <CardFooter className="flex flex-col gap-3">
+        {/* Butonul de acțiune principal (ex: Aplică) */}
+        <Button className="w-full py-6 text-lg font-bold" variant={btnVariant}>
           {buttonText} <ArrowRight className="ml-2 w-5 h-5" />
+        </Button>
+
+        {/* BUTONUL NOU cerut de Cătălin */}
+        <Button
+          variant="ghost"
+          className="w-full text-slate-500 hover:text-slate-800 dark:hover:text-white"
+          onClick={() => navigate("/dashboard")}
+        >
+          Înapoi la Dashboard
         </Button>
       </CardFooter>
     </Card>

@@ -14,15 +14,15 @@ export default function DashboardPage() {
   const [scoringData, setScoringData] = useState<any>(null);
 
   useEffect(() => {
-    setScoringData({
-      status: "approved",
-      score: 85,
-    });
+    const saved = localStorage.getItem("scoring-final");
+    if (saved) {
+      setScoringData(JSON.parse(saved));
+    }
   }, []);
 
   return (
     <DashboardLayout>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <ApplicationStatusCard
           status={data.applicationStatus.status}
           applicationId={data.applicationStatus.applicationId}

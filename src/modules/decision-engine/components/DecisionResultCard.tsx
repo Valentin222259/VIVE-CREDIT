@@ -21,7 +21,7 @@ export const DecisionResultCard: React.FC = () => {
       if (scoringResult) {
         let finalStatus: "approved" | "rejected" | "pending";
 
-        // Logica de mapare a scorului
+        // Logica de mapare a scorului (rămâne la fel)
         if (scoringResult.score >= 70) {
           finalStatus = "approved";
         } else if (scoringResult.score === 55) {
@@ -29,6 +29,15 @@ export const DecisionResultCard: React.FC = () => {
         } else {
           finalStatus = "rejected";
         }
+
+        // Salvăm rezultatul "curat" pentru Dashboard
+        localStorage.setItem(
+          "scoring-final",
+          JSON.stringify({
+            score: scoringResult.score,
+            status: finalStatus,
+          })
+        );
 
         setCurrentScenario({
           applicationId: `VIVE-${Math.floor(Math.random() * 9000 + 1000)}`,

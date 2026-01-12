@@ -22,7 +22,7 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <ApplicationStatusCard
           status={data.applicationStatus.status}
           applicationId={data.applicationStatus.applicationId}
@@ -36,7 +36,6 @@ export default function DashboardPage() {
         {/* Card status verificare */}
         <VerificationStatusCard clientId={1} />
 
-        {/* Card scor credit */}
         {scoringData && (
           <ScoringStatusCard
             status={scoringData.status}

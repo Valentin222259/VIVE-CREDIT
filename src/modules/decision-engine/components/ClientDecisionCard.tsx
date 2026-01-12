@@ -58,14 +58,12 @@ export const ClientDecisionCard = ({ data }: Props) => {
     >
       <CardHeader className="flex flex-col items-center text-center">
         <div className="mb-4">{icon}</div>
-        {/* Titlu adaptabil */}
         <CardTitle className="text-2xl font-bold dark:text-white">
           {title}
         </CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-6 text-center">
-        {/* Cutia scorului adaptabilă */}
         <div className="p-4 bg-white/50 dark:bg-slate-800/40 rounded-lg border border-white dark:border-slate-700">
           <p className="text-sm font-medium text-gray-500 dark:text-slate-400 uppercase">
             Scorul tău
@@ -75,7 +73,6 @@ export const ClientDecisionCard = ({ data }: Props) => {
           </div>
         </div>
 
-        {/* Mesaje adaptabile */}
         <p className="text-gray-700 dark:text-slate-200 font-medium">
           {message}
         </p>
@@ -85,12 +82,10 @@ export const ClientDecisionCard = ({ data }: Props) => {
       </CardContent>
 
       <CardFooter className="flex flex-col gap-3">
-        {/* Butonul de acțiune principal (ex: Aplică) */}
         <Button className="w-full py-6 text-lg font-bold" variant={btnVariant}>
           {buttonText} <ArrowRight className="ml-2 w-5 h-5" />
         </Button>
 
-        {/* BUTONUL NOU cerut de Cătălin */}
         <Button
           variant="ghost"
           className="w-full text-slate-500 hover:text-slate-800 dark:hover:text-white"

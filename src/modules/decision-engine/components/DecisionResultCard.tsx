@@ -21,12 +21,13 @@ export const DecisionResultCard: React.FC = () => {
       if (scoringResult) {
         let finalStatus: "approved" | "rejected" | "pending";
 
-        // Logica de mapare a scorului (rămâne la fel)
+        // Logica de mapare a scorului
         if (scoringResult.score >= 70) {
           finalStatus = "approved";
         } else if (scoringResult.score === 55) {
           finalStatus = "pending";
         } else {
+          // Scorurile de 40 și 25 ajung aici
           finalStatus = "rejected";
         }
 

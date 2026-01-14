@@ -31,7 +31,7 @@ export const DecisionResultCard: React.FC = () => {
           finalStatus = "rejected";
         }
 
-        // Salvăm rezultatul "curat" pentru Dashboard
+        // Salvam rezultatul "curat" pentru Dashboard
         localStorage.setItem(
           "scoring-final",
           JSON.stringify({

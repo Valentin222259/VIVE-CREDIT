@@ -36,6 +36,7 @@ import HelpPage from "@/modules/dashboard/pages/HelpPage";
 import LoanPage from "@/modules/dashboard/pages/LoanPage";
 import PaymentsPage from "@/modules/dashboard/pages/PaymentsPage";
 import UploadDocumentPage from "@/modules/dashboard/pages/UploadDocumentPage";
+import LoanForm from "@/pages/loan/LoanForm";
 import DecisionResultCard from "@/modules/decision-engine/components/DecisionResultCard";
 
 /* Operator Dashboard */
@@ -60,6 +61,9 @@ import { PolicyEnginePage, ScoringCalculatorPage } from "@/modules/scoring";
 import { ScorecardEngine } from "@/modules/scoring/pages/ScorecardEngine";
 
 /* Protected route */
+
+import ProtectedRoute from "@/components/ProtectedRoute";
+import RequestLoanPage from "@/modules/applications/pages/RequestLoanPage";
 import ProtectedAdminRoute from "@/components/ProtectedAdminRoute";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AdminHomePage from "@/modules/admin/pages/AdminHomePage";
@@ -146,7 +150,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-
+      {/*
       <Route
         path="/dashboard"
         element={
@@ -154,7 +158,9 @@ const AppRoutes = () => {
             <DashboardPage />
           </ProtectedRoute>
         }
-      />
+      /> */}
+
+      <Route path="/dashboard" element={<DashboardPage />} />
 
       <Route
         path="/dashboard/help"
@@ -229,6 +235,28 @@ const AppRoutes = () => {
       />
 
       <Route
+        path="/dashboard/loan-form"
+        element={
+          <ProtectedRoute allowedRoles={["client"]}>
+            <LoanForm />
+          </ProtectedRoute>
+        }
+      />
+      {/*
+      <Route
+        path="/dashboard/decision-result"
+        element={
+          <ProtectedRoute allowedRoles={["client"]}>
+            <DecisionResultCard />
+          </ProtectedRoute>
+        }
+      /> */}
+      <Route
+        path="/dashboard/decision-result"
+        element={<DecisionResultCard />}
+      />
+      {/* Scoring */}
+
         path="/dashboard/decision-result"
         element={<DecisionResultCard />}
       />
